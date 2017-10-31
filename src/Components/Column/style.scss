@@ -1,0 +1,36 @@
+.column
+{
+  display: inline-block;
+  width: 19rem;
+  min-height: 300px;
+  border-bottom: 1px solid #111;
+  background-color: #E1E2E1;
+  margin-right: 0.5%;
+}
+
+.column_headerContainer
+{
+  display: block;
+  float: left;
+  width: 100%;
+  min-height: 75px;
+  border-top: 13px solid #00796B;
+  background-color: #009688;
+}
+
+.column_title
+{
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 1rem 0 1rem;
+  word-break: break-all;
+}
+
+.column_tickets
+{
+  display: block;
+  width: 100%;
+  float: left;
+  height: auto;
+}

@@ -1,5 +1,8 @@
-body {
+body
+{
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  color: #F9F9F9;
+  background-color: rgba(245,245,246, 1);
 }
