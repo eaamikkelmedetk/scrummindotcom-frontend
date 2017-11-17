@@ -1,8 +1,77 @@
-body
-{
+body {
   font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 0;
-  color: #F9F9F9;
-  background-color: rgba(245,245,246, 1);
+  color: #f9f9f9;
+  background-color: rgba(245, 245, 246, 1);
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: "liga";
+}
+
+.board {
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: flex-start;
+}
+
+.formTextField {
+  margin: 10px auto 10px auto;
+  background: transparent;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #00796b;
+}
+
+.formTextField:focus {
+  outline: 0;
+}
+
+.formTextField:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.formTextArea {
+  box-sizing: border-box;
+  margin: 10px auto;
+  width: 100%;
+  border: 0;
+  resize: none;
+  padding: 0;
+  border-bottom: 1px solid #00796b;
+  background: transparent;
+}
+
+.formTextArea:focus {
+  outline: 0;
+}
+
+.formTextArea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.clear {
+  clear: both;
 }

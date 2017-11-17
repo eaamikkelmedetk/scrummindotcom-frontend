@@ -1,0 +1,74 @@
+.buttonCommon {
+  border-radius: 0.3rem;
+  color: #fafafa;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  height: 30px;
+  outline: 0;
+  text-transform: uppercase;
+  transition: background-color 250ms ease-in-out;
+}
+
+.buttonCommon:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.button {
+  @extend .buttonCommon;
+
+  display: inline-block;
+}
+
+.button--block {
+  @extend .buttonCommon;
+
+  display: block;
+  transition: background-color 250ms ease-in-out;
+  width: 100%;
+}
+
+.button_red {
+  background-color: #d50000;
+  border: 0;
+}
+
+.button_red--hover {
+  background-color: #ff1744;
+}
+
+.button_green {
+  background-color: transparent;
+  border: 0;
+  color: #64dd17;
+}
+
+.button_green--hover {
+  background-color: #76ff03;
+}
+
+.button_blue {
+  background-color: #00b8d4;
+  border: 0;
+}
+
+.button_blue--hover {
+  background-color: #00b8d4;
+}
+
+.orangeTransparent {
+  background-color: transparent;
+  border: 0;
+  color: #ff9100;
+}
+
+.orangeTransparent--hover {
+  background-color: transparent;
+  color: #ff9100;
+}
+
+.orangeTransparent--focus {
+  background-color: rgba(255, 109, 0, 0.12);
+  color: #ff9100;
+}

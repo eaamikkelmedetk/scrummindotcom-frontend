@@ -1,26 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Board from '../../Components/Board'
-import style from './style.css'
-import { denormalize, normalize } from 'normalizr';
-import {boardSchema} from './../../Schemas/Board'
-
-
-class BoardContainer extends Component {
-
-    render() {
-        console.log(this.props.board.columns);
-        return (
-            <Board columns={this.props.board.columns}></Board>
-        );
-    }
-}
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Board from "../../Components/Board";
+import { denormalize } from "normalizr";
+import { boardSchema } from "./../../Schemas/Board";
+import * as BoardActionCreators from "./actionCreator";
 
 const mapStateToProps = (state, ownProps) => {
-    const { entities } = state.boardReducer;
-    return {
-       board: denormalize(1, boardSchema, entities)
-    }
-}
+  const { board: { entities }, boardUI } = state;
+  return {
+    board: denormalize(1, boardSchema, entities),
+    boardUI
+  };
+};
 
-export default connect(mapStateToProps)(BoardContainer);
+const mapDispatchToProps = dispatch => {
+  return { actions: bindActionCreators({ ...BoardActionCreators }, dispatch) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

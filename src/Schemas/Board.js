@@ -1,4 +1,4 @@
-import { schema, array, normalize, Object } from 'normalizr';
+import { schema } from 'normalizr';
 
 const ticketSchema = new schema.Entity("ticket")
 const columnSchema = new schema.Entity("column", {tickets: [ticketSchema]})

@@ -11,12 +11,12 @@
   clear: both; }
 
 .ticket_header {
-  background-color: #C2185B;
+  background-color: #d50000;
   height: 34px;
   display: block;
   width: 100%;
   float: left;
-  border: 1px solid #C2185B; }
+  border: 1px solid #d50000; }
 
 .ticket_titleContainer {
   display: block;
@@ -37,13 +37,14 @@
 .ticket_menuIcon {
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 0.55rem; }
+  margin: 0.55rem;
+  cursor: pointer; }
 
 .ticket_body {
   display: block;
   float: left;
   width: 100%;
-  border: 1px solid #C2185B;
+  border: 1px solid #d50000;
   color: #111;
   word-wrap: break-word;
   min-height: 50px; }
@@ -58,5 +59,5 @@
   float: left;
   width: 100%;
   min-height: 25px;
-  background-color: #C2185B;
-  border: 1px solid #C2185B; }
+  background-color: #d50000;
+  border: 1px solid #d50000; }
