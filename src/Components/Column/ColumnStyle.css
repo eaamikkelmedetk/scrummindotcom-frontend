@@ -1,59 +1,59 @@
 .column {
+  background-color: #e1e2e1;
+  border-bottom: 1px solid #111;
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  width: 19rem;
+  margin-right: 0.5%;
   min-height: 300px;
-  border-bottom: 1px solid #111;
-  background-color: #e1e2e1;
-  margin-right: 0.5%; }
+  width: 19rem; }
 
 .column_headerContainer {
-  width: 100%;
+  cursor: pointer;
   min-height: 75px;
   overflow: hidden;
-  white-space: nowrap;
   vertical-align: top;
-  cursor: pointer; }
+  white-space: nowrap;
+  width: 100%; }
 
 .column_header {
-  width: 99%;
+  background-color: #009688;
+  border-top: 13px solid #4db6ac;
   display: inline-block;
   min-height: 75px;
-  border-top: 13px solid #4db6ac;
-  background-color: #009688;
+  transition: width 250ms ease-in-out;
   vertical-align: top;
-  transition: width 250ms ease-in-out; }
+  width: 99%; }
 
 .column_header--hover {
   width: 80%; }
 
 .column_actions {
+  background-color: #f50057;
   display: inline-block;
   min-height: 88px;
-  width: 20%;
-  background-color: #f50057; }
+  width: 20%; }
 
 .actions_delete {
-  display: flex;
   align-items: center;
+  cursor: pointer;
+  display: flex;
   height: 88px;
-  justify-content: center;
-  cursor: pointer; }
+  justify-content: center; }
 
 .column_title {
   font-size: 1.5rem;
   font-weight: bold;
+  padding: 0 1rem;
   text-align: center;
-  padding: 0 1rem 0 1rem;
   word-break: break-all; }
 
 .column_tickets {
-  width: 100%;
-  height: auto; }
+  height: auto;
+  width: 100%; }
 
 .column_ticketForm {
-  width: 100%;
   margin-top: auto;
   padding-bottom: 10px;
-  text-align: center; }
+  text-align: center;
+  width: 100%; }

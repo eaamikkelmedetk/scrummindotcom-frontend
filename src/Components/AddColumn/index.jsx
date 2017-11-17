@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import style from "./style.css";
 import { Field, reduxForm } from "redux-form";
-import Button from "../../Button";
+import ButtonItem from "../Button/ButtonItem";
 import classnames from "classnames";
 
 class AddColumn extends Component {
@@ -35,9 +35,9 @@ class AddColumn extends Component {
               placeholder="Column name..."
             />
             <div className="addNewColumn_submitButton">
-              <Button onClick={handleSubmit(this.handleAddColumn)} color="orange_transparent">
+              <ButtonItem onClick={handleSubmit(this.handleAddColumn)} color="orange_transparent">
                 Add column
-              </Button>
+              </ButtonItem>
             </div>
           </div>
           <br />

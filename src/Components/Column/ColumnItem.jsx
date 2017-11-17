@@ -1,11 +1,11 @@
 import React from "react";
-import Ticket from "./../Ticket";
-import style from "./style.css";
-import TicketForm from "./../TicketForm";
+import TicketItem from "../Ticket/TicketItem";
+import style from "./ColumnStyle.css";
+import TicketForm from "../TicketForm/TicketForm";
 import classnames from "classnames";
-import Button from "../../Button";
+import ButtonItem from "../Button/ButtonItem";
 
-class Column extends React.Component {
+class ColumnItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,11 @@ class Column extends React.Component {
     const { column: { tickets } } = this.props;
     if (tickets.length > 0) {
       return tickets.map(ticket => (
-        <Ticket key={ticket.id} handleTicketRemove={(e, data) => this.handleTicketRemove(e, data)} ticket={ticket} />
+        <TicketItem
+          key={ticket.id}
+          handleTicketRemove={(e, data) => this.handleTicketRemove(e, data)}
+          ticket={ticket}
+        />
       ));
     } else {
       return <div>This column is empty</div>;
@@ -99,9 +103,9 @@ class Column extends React.Component {
           {isTicketFormVisible ? (
             <TicketForm onAdd={this.handleOnAdd} onCancel={this.handleTicketFormVisibility} />
           ) : (
-            <Button style={{ width: "90%" }} onClick={this.handleTicketFormVisibility} color="blue">
+            <ButtonItem style={{ width: "90%" }} onClick={this.handleTicketFormVisibility} color="blue">
               Add ticket
-            </Button>
+            </ButtonItem>
           )}
         </div>
       </div>
@@ -109,4 +113,4 @@ class Column extends React.Component {
   }
 }
 
-export default Column;
+export default ColumnItem;

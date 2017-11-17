@@ -1,10 +1,10 @@
 import React from "react";
-import Column from "./Column";
-import AddColumn from "./AddColumn";
-import style from "./style.css";
+import ColumnItem from "../Column/ColumnItem";
+import AddColumn from "../AddColumn";
+import style from "./BoardStyle.css";
 import PropTypes from "prop-types";
 
-class Board extends React.Component {
+class BoardItem extends React.Component {
   getColumns() {
     const {
       board: { columns: boardColumns, id: boardId },
@@ -12,7 +12,7 @@ class Board extends React.Component {
       actions
     } = this.props;
     return boardColumns.map(column => (
-      <Column
+      <ColumnItem
         key={column.id}
         isTicketFormVisible={UIVisibilityColumns[column.id].isTicketFormVisibile}
         onTicketFormVisibilityChange={actions.dispatchSetTicketFormVisibility}
@@ -34,8 +34,8 @@ class Board extends React.Component {
   }
 }
 
-Board.propTypes = {
+BoardItem.propTypes = {
   columns: PropTypes.array
 };
 
-export default Board;
+export default BoardItem;

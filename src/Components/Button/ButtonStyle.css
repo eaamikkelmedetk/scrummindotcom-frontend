@@ -1,13 +1,13 @@
 .buttonCommon, .button, .button--block {
-  height: 30px;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  color: #fafafa;
   border-radius: 0.3rem;
+  color: #fafafa;
   cursor: pointer;
-  transition: background-color 250ms ease-in-out;
-  outline: 0; }
+  font-size: 0.8rem;
+  font-weight: bold;
+  height: 30px;
+  outline: 0;
+  text-transform: uppercase;
+  transition: background-color 250ms ease-in-out; }
 
 .buttonCommon:disabled, .button:disabled, .button--block:disabled {
   background-color: #bdbdbd;
@@ -17,9 +17,9 @@
   display: inline-block; }
 
 .button--block {
-  width: 100%;
   display: block;
-  transition: background-color 250ms ease-in-out; }
+  transition: background-color 250ms ease-in-out;
+  width: 100%; }
 
 .button_red {
   background-color: #d50000;
@@ -30,8 +30,8 @@
 
 .button_green {
   background-color: transparent;
-  color: #64dd17;
-  border: 0; }
+  border: 0;
+  color: #64dd17; }
 
 .button_green--hover {
   background-color: #76ff03; }
@@ -45,8 +45,8 @@
 
 .orangeTransparent {
   background-color: transparent;
-  color: #ff9100;
-  border: 0; }
+  border: 0;
+  color: #ff9100; }
 
 .orangeTransparent--hover {
   background-color: transparent;

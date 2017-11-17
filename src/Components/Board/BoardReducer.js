@@ -4,7 +4,7 @@ import {
   ADD_COLUMN,
   REMOVE_COLUMN,
   SET_TICKETFORMVISIBILITY
-} from "./actions";
+} from "./BoardActions";
 import { omit, without, reduce } from "lodash";
 
 const initialStateEntities = {
@@ -74,7 +74,7 @@ const initialStateEntities = {
   result: 1
 };
 
-export const boardReducer = (state = initialStateEntities, action) => {
+export const BoardReducer = (state = initialStateEntities, action) => {
   switch (action.type) {
     case ADD_TICKET_TO_COLUMN: {
       return {

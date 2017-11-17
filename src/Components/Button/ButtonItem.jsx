@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import style from "./style.css";
+import style from "./ButtonStyle.css";
 import classnames from "classnames";
 
-class Button extends Component {
+class ButtonItem extends Component {
   constructor(props) {
     super(props);
     this.handleHover = this.handleHover.bind(this);
@@ -97,4 +97,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default ButtonItem;

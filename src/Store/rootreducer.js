@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-import { boardReducer, boardUIReducer } from "../Containers/BoardContainer/reducer";
+import { BoardReducer, boardUIReducer } from "../Components/Board/BoardReducer";
 
 export const rootReducer = combineReducers({
-  board: boardReducer,
+  board: BoardReducer,
   boardUI: boardUIReducer,
   form: formReducer
 });

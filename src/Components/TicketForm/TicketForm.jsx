@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import style from "./style.css";
-import Button from "../../Button";
+import style from "./TicketFormStyle.css";
+import ButtonItem from "../Button/ButtonItem";
 
 const TicketForm = props => {
   const { onAdd: handleAdd, onCancel: handleCancel, handleSubmit, pristine, reset, submitting } = props;
@@ -28,12 +28,12 @@ const TicketForm = props => {
         placeholder="Description..."
       />
       <div className="ticketForm_submitAndCancelButtons">
-        <Button onClick={handleCancel} color="orange_transparent">
+        <ButtonItem onClick={handleCancel} color="orange_transparent">
           Cancel
-        </Button>
-        <Button onClick={handleSubmit(handleAdd)} color="orange_transparent">
+        </ButtonItem>
+        <ButtonItem onClick={handleSubmit(handleAdd)} color="orange_transparent">
           Add ticket
-        </Button>
+        </ButtonItem>
       </div>
     </div>
   );

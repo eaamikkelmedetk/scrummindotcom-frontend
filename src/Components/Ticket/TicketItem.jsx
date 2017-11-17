@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./style.css";
+import style from "./TicketStyle.css";
 
 const Ticket = props => {
   const { handleTicketRemove, ticket: { id: ticketId, title, description } } = props;

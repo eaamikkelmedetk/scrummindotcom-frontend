@@ -4,7 +4,7 @@ import {
   ADD_COLUMN,
   REMOVE_COLUMN,
   SET_TICKETFORMVISIBILITY
-} from "./actions";
+} from "./BoardActions";
 import uniqid from "uniqid";
 
 export function dispatchAddTicketToColumn(columnid, title, description) {
