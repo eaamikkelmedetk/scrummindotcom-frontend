@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 class BoardItem extends React.Component {
   getColumns() {
+    console.log(this.props);
     const {
       board: { columns: boardColumns, id: boardId },
       boardUI: { column: UIVisibilityColumns },

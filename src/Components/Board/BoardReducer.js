@@ -8,97 +8,82 @@ import {
 import { omit, without, reduce } from "lodash";
 
 const initialStateEntities = {
-  entities: {
-    ticket: {
-      "1": {
-        id: 1,
-        title: "Køb mælk",
-        description: "Vi mangler mælk til havrefrasen imorgen."
-      },
-      "2": {
-        id: 2,
-        title: "Vask tøjet",
-        description: "Der skal vaskes så vi har rent tøj til imorgen"
-      },
-      "3": {
-        id: 3,
-        title: "Hent unger",
-        description: "Ungerne skal hentes i institutionen"
-      },
-      "4": {
-        id: 4,
-        title: "Lav madpakke",
-        description: "Der skal laves madpakker til ungerne"
-      },
-      "5": {
-        id: 5,
-        title: "Create",
-        description: "Create things"
-      }
+  ticket: {
+    "1": {
+      id: 1,
+      title: "Køb mælk",
+      description: "Vi mangler mælk til havrefrasen imorgen."
     },
-    column: {
-      "1": {
-        id: 1,
-        title: "Backlog",
-        tickets: [1]
-      },
-      "2": {
-        id: 2,
-        title: "Analysis",
-        tickets: [2]
-      },
-      "3": {
-        id: 3,
-        title: "In-development",
-        tickets: [3]
-      },
-      "4": {
-        id: 4,
-        title: "Client-review",
-        tickets: [4]
-      },
-      "5": {
-        id: 5,
-        title: "Done",
-        tickets: [5]
-      }
+    "2": {
+      id: 2,
+      title: "Vask tøjet",
+      description: "Der skal vaskes så vi har rent tøj til imorgen"
     },
-    board: {
-      "1": {
-        id: 1,
-        title: "portfolio",
-        columns: [1, 2, 3, 4, 5]
-      }
+    "3": {
+      id: 3,
+      title: "Hent unger",
+      description: "Ungerne skal hentes i institutionen"
+    },
+    "4": {
+      id: 4,
+      title: "Lav madpakke",
+      description: "Der skal laves madpakker til ungerne"
+    },
+    "5": {
+      id: 5,
+      title: "Create",
+      description: "Create things"
     }
   },
-  result: 1
+  column: {
+    "1": {
+      id: 1,
+      title: "Backlog",
+      tickets: [1]
+    },
+    "2": {
+      id: 2,
+      title: "Analysis",
+      tickets: [2]
+    },
+    "3": {
+      id: 3,
+      title: "In-development",
+      tickets: [3]
+    },
+    "4": {
+      id: 4,
+      title: "Client-review",
+      tickets: [4]
+    },
+    "5": {
+      id: 5,
+      title: "Done",
+      tickets: [5]
+    }
+  },
+  board: {
+    "1": {
+      id: 1,
+      title: "portfolio",
+      columns: [1, 2, 3, 4, 5]
+    }
+  }
 };
 
 export const BoardReducer = (state = initialStateEntities, action) => {
   switch (action.type) {
     case ADD_TICKET_TO_COLUMN: {
-      return {
-        ...state,
-        entities: addTicketToColumn(state.entities, action)
-      };
+      return addTicketToColumn(state, action);
     }
     case REMOVE_TICKET_FROM_COLUMN: {
-      return {
-        ...state,
-        entities: removeTicketFromColumn(state.entities, action)
-      };
+      return removeTicketFromColumn(state, action);
     }
     case ADD_COLUMN: {
-      return {
-        ...state,
-        entities: addColumn(state.entities, action)
-      };
+      return addColumn(state, action);
     }
     case REMOVE_COLUMN: {
-      return {
-        ...state,
-        entities: removeColumn(state.entities, action)
-      };
+      return removeColumn(state, action);
     }
     default: {
       return state;
