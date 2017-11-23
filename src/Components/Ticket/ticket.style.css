@@ -61,3 +61,25 @@
   float: left;
   min-height: 25px;
   width: 100%; }
+
+.ticketForm {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  margin: 0rem 1rem 0 1rem; }
+
+.ticketForm_submitAndCancelButtons {
+  display: block;
+  text-align: right;
+  margin: 0 -0.3rem 0; }
+
+.ticketForm_header {
+  color: #111;
+  font-size: 1.17rem;
+  text-align: left;
+  font-size: 1rem;
+  display: flex;
+  align-items: center; }
+
+.header_icon {
+  font-size: 1.5rem; }

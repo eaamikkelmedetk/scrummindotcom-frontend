@@ -1,3 +1,8 @@
+.columns {
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: flex-start; }
+
 .column {
   background-color: #e1e2e1;
   border-bottom: 1px solid #111;
@@ -50,11 +55,11 @@
 
 .column_tickets {
   height: auto;
+  min-height: 100px;
   width: 100%; }
 
 .column_ticketForm {
   margin-top: auto;
-  padding-bottom: 10px;
   text-align: center;
   width: 100%; }
 

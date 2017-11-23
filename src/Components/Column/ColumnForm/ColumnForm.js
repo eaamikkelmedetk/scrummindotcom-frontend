@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import style from "./style.css";
+import style from "../column.style.css";
 import { Field, reduxForm } from "redux-form";
-import ButtonItem from "../Button/ButtonItem";
-import classnames from "classnames";
+import ButtonItem from "../../Button/ButtonItem";
 
-class AddColumn extends Component {
+class ColumnForm extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.handleAddColumn = this.handleAddColumn.bind(this);
   }
 
@@ -25,7 +25,7 @@ class AddColumn extends Component {
           <h2 className="addNewColumn_title">Add column...</h2>
         </div>
         <div className="addNewColumn_columnForm">
-          <div class="columnForm">
+          <div className="columnForm">
             <Field
               name="title"
               autoComplete="off"
@@ -49,4 +49,4 @@ class AddColumn extends Component {
   }
 }
 
-export default reduxForm({ form: "ColumnForm" })(AddColumn);
+export default reduxForm({ form: "ColumnForm" })(ColumnForm);

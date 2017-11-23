@@ -1,8 +1,15 @@
 import React from "react";
-import style from "./TicketStyle.css";
+import style from "../ticket.style.css";
 
-const Ticket = props => {
-  const { handleTicketRemove, ticket: { id: ticketId, title, description } } = props;
+const TicketItem = props => {
+  const {
+    ticket: { id: ticketId, title, description },
+    columnId,
+    actions: { dispatchRemoveTicketFromColumn }
+  } = props;
+  const handleTicketRemove = data => {
+    dispatchRemoveTicketFromColumn(columnId, data);
+  };
 
   return (
     <div className="ticket">
@@ -11,7 +18,9 @@ const Ticket = props => {
           <h2 className="ticket_titleText">{title}</h2>
         </div>
         <div className="ticket_menuContainer">
-          <i onClick={() => handleTicketRemove(ticketId)} className="ticket_menuIcon material-icons">
+          <i
+            onClick={() => handleTicketRemove(ticketId)}
+            className="ticket_menuIcon material-icons">
             close
           </i>
         </div>
@@ -24,4 +33,4 @@ const Ticket = props => {
   );
 };
 
-export default Ticket;
+export default TicketItem;
