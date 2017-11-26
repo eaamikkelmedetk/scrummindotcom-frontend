@@ -6,7 +6,6 @@ import ButtonItem from "../../Button/ButtonItem";
 class ColumnForm extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.handleAddColumn = this.handleAddColumn.bind(this);
   }
 
@@ -35,7 +34,9 @@ class ColumnForm extends Component {
               placeholder="Column name..."
             />
             <div className="addNewColumn_submitButton">
-              <ButtonItem onClick={handleSubmit(this.handleAddColumn)} color="orange_transparent">
+              <ButtonItem
+                onClick={handleSubmit(this.handleAddColumn)}
+                color="orange_transparent">
                 Add column
               </ButtonItem>
             </div>

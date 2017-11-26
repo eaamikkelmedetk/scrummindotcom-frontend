@@ -1,4 +1,4 @@
-import { ADD_COLUMN, REMOVE_COLUMN } from "./board.actions";
+import { ADD_COLUMN, REMOVE_COLUMN, REORDER_COLUMN } from "./board.actions";
 import { without } from "lodash";
 
 const initialStateEntities = {
@@ -16,6 +16,9 @@ export const BoardReducer = (state = initialStateEntities, action) => {
     }
     case REMOVE_COLUMN: {
       return removeColumn(state, action);
+    }
+    case REORDER_COLUMN: {
+      return reorderColumn(state, action);
     }
     default: {
       return state;
@@ -45,4 +48,29 @@ function removeColumn(state, action) {
       columns: without(state[boardId].columns, columnId)
     }
   };
+}
+
+function reorderColumn(state, action) {
+  console.log("reducer");
+  const { boardId, columnIdMoveFrom, columnIdMoveTo } = action.payload;
+  const fromIndex = state[boardId].columns.indexOf(columnIdMoveFrom);
+  const toIndex = state[boardId].columns.indexOf(columnIdMoveTo);
+
+  return {
+    ...state,
+    [boardId]: {
+      ...state[boardId],
+      columns: immutablySwapItems(state[boardId].columns, fromIndex, toIndex)
+    }
+  };
+}
+
+function immutablySwapItems(items, firstIndex, secondIndex) {
+  // Constant reference - we can still modify the array itself
+  const results = items.slice();
+  const firstItem = items[firstIndex];
+  results[firstIndex] = items[secondIndex];
+  results[secondIndex] = firstItem;
+
+  return results;
 }

@@ -3,7 +3,8 @@ import {
   REMOVE_TICKET_FROM_COLUMN,
   ADD_COLUMN,
   REMOVE_COLUMN,
-  SET_TICKETFORMVISIBILITY
+  SET_TICKETFORMVISIBILITY,
+  REORDER_COLUMN
 } from "./board.actions";
 import uniqid from "uniqid";
 

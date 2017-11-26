@@ -6,14 +6,23 @@ import ColumnItem from "../ColumnItem/ColumnItem";
 import ColumnForm from "../ColumnForm/ColumnForm";
 
 class ColumnListContainer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   getColumns() {
     const { actions, boardId, columnIds, columnEntity } = this.props;
 
     let columnsToRender = columnIds;
 
-    let printColumns = columnsToRender.map(id => {
+    let printColumns = columnsToRender.map((id, localIndex) => {
       let column = columnEntity[id];
-      return <ColumnItem key={column.id} {...{ actions, column, boardId }} />;
+      return (
+        <ColumnItem
+          key={column.id}
+          {...{ actions, localIndex, column, boardId }}
+        />
+      );
     });
 
     return printColumns;

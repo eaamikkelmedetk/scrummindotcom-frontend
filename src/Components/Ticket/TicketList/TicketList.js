@@ -7,10 +7,13 @@ class TicketList extends React.Component {
 
     let ticketsToRender = ticketIds;
 
-    let printTickets = ticketsToRender.map(id => {
+    let printTickets = ticketsToRender.map((id, localIndex) => {
       let ticket = ticketEntity[id];
       return ticket !== undefined ? (
-        <TicketItem key={ticket.id} {...{ columnId, ticket, actions }} />
+        <TicketItem
+          key={ticket.id}
+          {...{ columnId, ticket, localIndex, actions }}
+        />
       ) : (
         <div>Hej</div>
       );

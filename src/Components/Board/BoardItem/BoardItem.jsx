@@ -6,10 +6,10 @@ import PropTypes from "prop-types";
 class BoardItem extends React.Component {
   render() {
     /*     const { actions, board: { id: boardId } } = this.props; */
-    const { board: { id, columns: columnIds } } = this.props;
+    const { board: { id: boardId, columns: columnIds } } = this.props;
     return (
       <div className="board">
-        <ColumnListContainer {...{ id, columnIds }} />
+        <ColumnListContainer {...{ boardId, columnIds }} />
       </div>
     );
   }

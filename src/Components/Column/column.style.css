@@ -13,6 +13,9 @@
   min-height: 300px;
   width: 19rem; }
 
+.column--ticketIsOver {
+  background-color: #bdbdbd; }
+
 .column_headerContainer {
   cursor: pointer;
   min-height: 75px;

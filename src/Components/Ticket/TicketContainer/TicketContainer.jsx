@@ -21,8 +21,13 @@ const mapStateToProps = (state, ownProps) => {
     boardUI: { column: UIColumns }
   } = state;
   const { ticketIds, columnId } = ownProps;
+
   return {
-    ticketList: { columnId, ticketIds, ticketEntity },
+    ticketList: {
+      columnId,
+      ticketIds,
+      ticketEntity
+    },
     ticketForm: {
       columnId,
       isTicketFormVisible: UIColumns[columnId].isTicketFormVisibile

@@ -1,4 +1,9 @@
-import { ADD_TICKET_TO_COLUMN, REMOVE_TICKET_FROM_COLUMN, SET_TICKETFORMVISIBILITY } from "./ticket.actions";
+import {
+  ADD_TICKET_TO_COLUMN,
+  REMOVE_TICKET_FROM_COLUMN,
+  SET_TICKETFORMVISIBILITY,
+  REORDER_TICKET
+} from "./ticket.actions";
 import uniqid from "uniqid";
 
 export function dispatchAddTicketToColumn(columnid, title, description) {
@@ -28,6 +33,21 @@ export function dispatchSetTicketFormVisibility(columnId) {
     type: SET_TICKETFORMVISIBILITY,
     payload: {
       columnId
+    }
+  };
+}
+
+export function dispatchReorderTicket(
+  columnId,
+  ticketIdMoveFrom,
+  ticketIdMoveTo
+) {
+  return {
+    type: REORDER_TICKET,
+    payload: {
+      columnId,
+      ticketIdMoveFrom,
+      ticketIdMoveTo
     }
   };
 }
