@@ -1,18 +1,18 @@
 import {
-  ADD_TICKET_TO_COLUMN,
-  REMOVE_TICKET_FROM_COLUMN,
-  ADD_COLUMN,
-  REMOVE_COLUMN,
-  SET_TICKETFORMVISIBILITY,
-  REORDER_COLUMN,
-  MOVE_TICKET_TO_COLUMN,
-  REORDER_TICKET
+  TICKET_COLUMN_ADD,
+  TICKET_COLUMN_REMOVE,
+  COLUMN_ADD,
+  COLUMN_REMOVE,
+  TICKET_SETFORMVISIBILITY,
+  COLUMN_REORDER,
+  COLUMN_MOVETICKETFROMTO,
+  TICKET_REORDER
 } from "./Actions";
 import uniqid from "uniqid";
 
 export function dispatchAddTicketToColumn(columnid, title, description) {
   return {
-    type: ADD_TICKET_TO_COLUMN,
+    type: TICKET_COLUMN_ADD,
     payload: {
       id: uniqid(),
       columnid,
@@ -24,7 +24,7 @@ export function dispatchAddTicketToColumn(columnid, title, description) {
 
 export function dispatchRemoveTicketFromColumn(columnid, id) {
   return {
-    type: REMOVE_TICKET_FROM_COLUMN,
+    type: TICKET_COLUMN_REMOVE,
     payload: {
       columnid,
       id
@@ -34,7 +34,7 @@ export function dispatchRemoveTicketFromColumn(columnid, id) {
 
 export function dispatchAddColumn(boardId, title) {
   return {
-    type: ADD_COLUMN,
+    type: COLUMN_ADD,
     payload: {
       id: uniqid(),
       boardId: boardId,
@@ -45,7 +45,7 @@ export function dispatchAddColumn(boardId, title) {
 
 export function dispatchRemoveColumn(boardId, columnId) {
   return {
-    type: REMOVE_COLUMN,
+    type: COLUMN_REMOVE,
     payload: {
       boardId,
       columnId
@@ -55,7 +55,7 @@ export function dispatchRemoveColumn(boardId, columnId) {
 
 export function dispatchSetTicketFormVisibility(columnId) {
   return {
-    type: SET_TICKETFORMVISIBILITY,
+    type: TICKET_SETFORMVISIBILITY,
     payload: {
       columnId
     }
@@ -64,7 +64,7 @@ export function dispatchSetTicketFormVisibility(columnId) {
 
 export function dispatchMoveTicketFromColumn(fromColumn, toColumn, ticketId) {
   return {
-    type: MOVE_TICKET_TO_COLUMN,
+    type: COLUMN_MOVETICKETFROMTO,
     payload: {
       fromColumn,
       toColumn,
@@ -79,7 +79,7 @@ export function dispatchReorderColumn(
   columnIdMoveTo
 ) {
   return {
-    type: REORDER_COLUMN,
+    type: COLUMN_REORDER,
     payload: {
       boardId,
       columnIdMoveFrom,
@@ -94,7 +94,7 @@ export function dispatchReorderTicket(
   ticketIdMoveTo
 ) {
   return {
-    type: REORDER_TICKET,
+    type: TICKET_REORDER,
     payload: {
       columnId,
       ticketIdMoveFrom,

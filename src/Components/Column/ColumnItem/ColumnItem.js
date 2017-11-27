@@ -107,7 +107,9 @@ function collectTarget(connect, monitor) {
     // You can ask the monitor about the current drag state:
     itemType: monitor.getItemType(),
     canDrop: monitor.canDrop(),
-    isOver: monitor.isOver()
+    isOver: monitor.isOver({ shallow: true }),
+    sourceOffSet: monitor.getSourceClientOffset(),
+    pointerCoordinates: monitor.getClientOffset()
   };
 }
 
@@ -166,16 +168,37 @@ class ColumnItem extends React.Component {
       connectDragSource,
       connectDropTarget,
       isOver,
-      canDrop
+      canDrop,
+      itemType,
+      pointerCoordinates,
+      sourceOffSet
     } = this.props;
     const { isShowActions } = this.state;
 
     return connectDragSource(
       connectDropTarget(
         <div
-          className={classnames("column", {
-            "column--ticketIsOver": isOver && canDrop
-          })}>
+          className={classnames(
+            "column",
+            {
+              "column--ticketIsOver":
+                isOver && canDrop && itemType === Types.TICKET
+            }
+            // {
+            //   "column--anotherColumnIsOverLeft":
+            //     isOver &&
+            //     canDrop &&
+            //     itemType === Types.COLUMN &&
+            //     (sourceOffSet.x === 0 ? 100 : 0) < pointerCoordinates.x
+            // },
+            // {
+            //   "column--anotherColumnIsOverRight":
+            //     isOver &&
+            //     canDrop &&
+            //     itemType === Types.COLUMN &&
+            //     sourceOffSet.x > pointerCoordinates.x
+            // }
+          )}>
           <div
             ref={el => (this.headerContainer = el)}
             className="column_headerContainer">

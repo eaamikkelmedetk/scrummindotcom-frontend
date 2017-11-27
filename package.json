@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",
+    "axios": "^0.17.1",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -48,6 +49,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
     "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0",
     "render-if": "^0.1.1",
     "reselect": "^3.0.1",
     "style-loader": "0.18.2",
@@ -62,16 +64,19 @@
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css":
-      "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "node scripts/start.js",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && node scripts/build.js",
     "test": "react-scripts test --env=jsdom"
   },
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-    "setupFiles": ["<rootDir>/config/polyfills.js"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",
       "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
@@ -83,15 +88,28 @@
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
-    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web"
     },
-    "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx", "node"]
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ]
   },
   "babel": {
-    "plugins": ["transform-decorators"],
-    "presets": ["react-app"]
+    "plugins": [
+      "transform-decorators"
+    ],
+    "presets": [
+      "react-app"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"

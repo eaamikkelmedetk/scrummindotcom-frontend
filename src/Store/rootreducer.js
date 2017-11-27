@@ -1,10 +1,9 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
-import reducer from "../Components/Reducer";
-import { ticketUIReducer } from "../Components/Ticket/ticket.reducer";
+import { BoardReducer, ticketUIReducer } from "../Modules/Board/Reducer";
 
 export const rootReducer = combineReducers({
-  entities: reducer,
+  entities: BoardReducer,
   boardUI: ticketUIReducer,
   form: formReducer
 });

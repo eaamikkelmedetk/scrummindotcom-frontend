@@ -19,6 +19,14 @@
   background-color: #bdbdbd;
 }
 
+.column--anotherColumnIsOverLeft {
+  margin-left: 100px;
+}
+
+.column--anotherColumnIsOverRight {
+  margin-right: 100px;
+}
+
 .column_headerContainer {
   cursor: pointer;
   min-height: 75px;

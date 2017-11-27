@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import BoardItem from "../BoardItem/BoardItem";
-import * as BoardActionCreators from "../board.actioncreator";
+import * as ActionCreators from "../../../Modules/Board/ActionCreators";
 
 const mapStateToProps = (state, ownProps) => {
   const { entities: { board } } = state;
@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return { actions: bindActionCreators({ ...BoardActionCreators }, dispatch) };
+  return { actions: bindActionCreators({ ...ActionCreators }, dispatch) };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardItem);

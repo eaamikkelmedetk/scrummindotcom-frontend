@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import TicketList from "../TicketList/TicketList";
 import TicketForm from "../TicketForm/TicketForm";
-import * as ActionCreators from "../ticket.actioncreators";
+import * as ActionCreators from "../../../Modules/Board/ActionCreators";
 
 class TicketContainer extends React.Component {
   render() {

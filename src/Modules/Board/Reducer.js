@@ -1,13 +1,13 @@
 import {
-  ADD_TICKET_TO_COLUMN,
-  REMOVE_TICKET_FROM_COLUMN,
-  ADD_COLUMN,
-  REMOVE_COLUMN,
-  SET_TICKETFORMVISIBILITY,
-  REORDER_COLUMN,
-  MOVE_TICKET_TO_COLUMN,
-  REORDER_TICKET
-} from "./board.actions";
+  TICKET_COLUMN_ADD,
+  TICKET_COLUMN_REMOVE,
+  COLUMN_ADD,
+  COLUMN_REMOVE,
+  TICKET_SETFORMVISIBILITY,
+  COLUMN_REORDER,
+  COLUMN_MOVETICKETFROMTO,
+  TICKET_REORDER
+} from "./Actions";
 import { without, omit, reduce } from "lodash";
 
 const initialStateEntities = {
@@ -43,63 +43,63 @@ const initialStateEntities = {
       id: 5,
       title: "Done",
       tickets: [5]
+    }
+  },
+  ticket: {
+    "1": {
+      id: 1,
+      title: "Køb mælk",
+      description: "Vi mangler mælk til havrefrasen imorgen."
     },
-    ticket: {
-      "1": {
-        id: 1,
-        title: "Køb mælk",
-        description: "Vi mangler mælk til havrefrasen imorgen."
-      },
-      "2": {
-        id: 2,
-        title: "Vask tøjet",
-        description: "Der skal vaskes så vi har rent tøj til imorgen"
-      },
-      "3": {
-        id: 3,
-        title: "Hent unger",
-        description: "Ungerne skal hentes i institutionen"
-      },
-      "4": {
-        id: 4,
-        title: "Lav madpakke",
-        description: "Der skal laves madpakker til ungerne"
-      },
-      "5": {
-        id: 5,
-        title: "Create",
-        description: "Create things"
-      },
-      "6": {
-        id: 6,
-        title: "Bum",
-        description: "Create things"
-      }
+    "2": {
+      id: 2,
+      title: "Vask tøjet",
+      description: "Der skal vaskes så vi har rent tøj til imorgen"
+    },
+    "3": {
+      id: 3,
+      title: "Hent unger",
+      description: "Ungerne skal hentes i institutionen"
+    },
+    "4": {
+      id: 4,
+      title: "Lav madpakke",
+      description: "Der skal laves madpakker til ungerne"
+    },
+    "5": {
+      id: 5,
+      title: "Create",
+      description: "Create things"
+    },
+    "6": {
+      id: 6,
+      title: "Bum",
+      description: "Create things"
     }
   }
 };
 
 export const BoardReducer = (state = initialStateEntities, action) => {
   switch (action.type) {
-    case ADD_COLUMN: {
+    case COLUMN_ADD: {
       return addColumn(state, action);
     }
-    case ADD_TICKET_TO_COLUMN: {
+    case TICKET_COLUMN_ADD: {
       return addTicketToColumn(state, action);
     }
-    case REMOVE_COLUMN: {
+    case COLUMN_REMOVE: {
       return removeColumn(state, action);
     }
-    case REMOVE_TICKET_FROM_COLUMN: {
+    case TICKET_COLUMN_REMOVE: {
       return removeTicketFromColumn(state, action);
     }
-    case REORDER_COLUMN: {
+    case COLUMN_REORDER: {
       return reorderColumn(state, action);
     }
-    case REORDER_TICKET: {
+    case TICKET_REORDER: {
       return reorderTicket(state, action);
     }
-    case MOVE_TICKET_TO_COLUMN: {
+    case COLUMN_MOVETICKETFROMTO: {
       return moveTicketFromTo(state, action);
     }
     default: {
@@ -144,7 +144,7 @@ function addTicketToColumn(state, action) {
       }
     },
     ticket: {
-      ...state.tickets,
+      ...state.ticket,
       [id]: {
         id: id,
         title: title,
@@ -184,7 +184,10 @@ function removeTicketFromColumn(state, action) {
         ]
       }
     },
-    ticket: omit(state.ticket, id)
+    ticket: {
+      ...state.ticket,
+      [id]: omit(state.ticket, id)
+    }
   };
 }
 
@@ -192,12 +195,20 @@ function reorderColumn(state, action) {
   const { boardId, columnIdMoveFrom, columnIdMoveTo } = action.payload;
   const fromIndex = state.board[boardId].columns.indexOf(columnIdMoveFrom);
   const toIndex = state.board[boardId].columns.indexOf(columnIdMoveTo);
-
+  console.log(boardId);
+  console.log(state.board[boardId].columns);
   return {
     ...state,
-    [boardId]: {
-      ...state[boardId],
-      columns: immutablySwapItems(state[boardId].columns, fromIndex, toIndex)
+    board: {
+      ...state.board,
+      [boardId]: {
+        ...state.board[boardId],
+        columns: immutablySwapItems(
+          state.board[boardId].columns,
+          fromIndex,
+          toIndex
+        )
+      }
     }
   };
 }
@@ -285,17 +296,17 @@ const InitialColumnUIState = {
 
 export const ticketUIReducer = (state = InitialColumnUIState, action) => {
   switch (action.type) {
-    case ADD_COLUMN:
+    case COLUMN_ADD:
       return {
         ...state,
         column: addColumnUI(state.column, action)
       };
-    case REMOVE_COLUMN:
+    case COLUMN_REMOVE:
       return {
         ...state,
         column: removeColumnUI(state.column, action)
       };
-    case SET_TICKETFORMVISIBILITY:
+    case TICKET_SETFORMVISIBILITY:
       return setTicketFormVisibilityUI(state, action);
     default:
       return state;
