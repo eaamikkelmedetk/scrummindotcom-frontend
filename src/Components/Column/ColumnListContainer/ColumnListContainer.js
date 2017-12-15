@@ -1,30 +1,35 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as ActionCreators from "../../../Modules/Board/ActionCreators";
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ColumnItem from "../ColumnItem/ColumnItem";
 import ColumnForm from "../ColumnForm/ColumnForm";
+import "./columnlistcontainer.style.css";
 
-class ColumnListContainer extends React.Component {
+class ColumnListContainer extends Component {
   static propTypes = {
-    actions: PropTypes.objectOf(PropTypes.func),
+    actions: PropTypes.objectOf(PropTypes.func).isRequired,
     boardId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired,
     columnIds: PropTypes.arrayOf(
       PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     ).isRequired,
     columnEntity: PropTypes.objectOf(
-      PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-          .isRequired,
-        title: PropTypes.string
-      })
+      PropTypes.oneOfType([
+        PropTypes.shape({
+          id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired,
+          title: PropTypes.string
+        }),
+        PropTypes.shape({
+          isFetching: PropTypes.bool
+        })
+      ])
     )
   };
 
-  getColumns() {
-    const { actions, boardId, columnIds, columnEntity } = this.props;
+  getColumns(actions, boardId, columnIds, columnEntity) {
     let columnsToRender = columnIds;
 
     let printColumns = columnsToRender.map((id, localIndex) => {
@@ -32,6 +37,10 @@ class ColumnListContainer extends React.Component {
       return (
         <ColumnItem
           key={column.id}
+          form={column.id.toString()}
+          initialValues={{
+            columnTitleField: column.title
+          }}
           {...{ actions, localIndex, column, boardId }}
         />
       );
@@ -41,10 +50,16 @@ class ColumnListContainer extends React.Component {
   }
 
   render() {
-    const { actions: { dispatchAddColumn }, boardId } = this.props;
+    const {
+      actions: { dispatchAddColumn },
+      actions,
+      boardId,
+      columnIds,
+      columnEntity
+    } = this.props;
     return (
       <div className="columns">
-        {this.getColumns()}
+        {this.getColumns(actions, boardId, columnIds, columnEntity)}
         <ColumnForm {...{ dispatchAddColumn, boardId }} />
       </div>
     );

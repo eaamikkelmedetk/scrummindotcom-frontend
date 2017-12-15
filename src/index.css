@@ -32,42 +32,34 @@ body {
   font-feature-settings: "liga";
 }
 
-.board {
-}
-
-.formTextField {
-  margin: 10px auto 10px auto;
-  background: transparent;
+input {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid #00796b;
+  background: transparent;
 }
 
-.formTextField:focus {
+input:focus {
   outline: 0;
 }
 
-.formTextField:focus::-webkit-input-placeholder {
+textarea:focus {
+  outline: 0;
+}
+
+input:focus::-webkit-input-placeholder {
   color: transparent;
 }
 
-.formTextArea {
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+textarea {
   box-sizing: border-box;
-  margin: 10px auto;
   width: 100%;
   border: 0;
   resize: none;
   padding: 0;
-  border-bottom: 1px solid #00796b;
-  background: transparent;
-}
-
-.formTextArea:focus {
-  outline: 0;
-}
-
-.formTextArea:focus::-webkit-input-placeholder {
-  color: transparent;
 }
 
 .clear {

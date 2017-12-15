@@ -1,17 +1,14 @@
 import React from "react";
-import style from "../column.style.css";
 import classnames from "classnames";
 import TicketContainer from "../../Ticket/TicketContainer/TicketContainer";
-import { findDOMNode } from "react-dom";
 import { DragSource, DropTarget } from "react-dnd";
+import { Field, reduxForm } from "redux-form";
 import { flow } from "lodash";
+import PropTypes from "prop-types";
+import { TICKET, COLUMN } from "../../../Modules/Board/DragAndDropTypes";
+import "./columnitem.style.css";
 
-const Types = {
-  TICKET: "ticket",
-  COLUMN: "column"
-};
-
-const columnSource = {
+const ColumnSource = {
   beginDrag(props, monitor, component) {
     const item = {
       columnId: props.column.id,
@@ -24,30 +21,37 @@ const columnSource = {
 
 function collectSource(connect, monitor) {
   return {
-    // Call this function inside render()
-    // to let React DnD handle the drag events:
-    connectDragSource: connect.dragSource(),
-    // You can ask the monitor about the current drag state:
-    isDragging: monitor.isDragging()
+    connectDragSource: connect.dragSource()
   };
 }
 
 const ColumnTarget = {
   canDrop(props, monitor) {
+    const itemType = monitor.getItemType();
     const item = monitor.getItem();
 
-    const { fromColumn } = item;
-    const { column: { id: toColumn } } = props;
+    let dropIsAllowed;
 
-    let dropIsAllowed = fromColumn !== toColumn;
+    if (itemType === TICKET) {
+      const { fromColumn } = item;
+      const { column: { id: toColumn } } = props;
+      dropIsAllowed = fromColumn !== toColumn;
+    }
+
+    if (itemType === COLUMN) {
+      const { localIndex: fromIndex } = item;
+      const { localIndex: toIndex } = props;
+
+      dropIsAllowed = fromIndex !== toIndex;
+    }
 
     return dropIsAllowed;
   },
   drop(props, monitor, component) {
     const itemType = monitor.getItemType();
-    if (itemType === Types.TICKET) {
-      const item = monitor.getItem();
+    const item = monitor.getItem();
 
+    if (itemType === TICKET) {
       const { ticketId, fromColumn } = item;
 
       const {
@@ -56,43 +60,19 @@ const ColumnTarget = {
       } = props;
 
       dispatchMoveTicketFromColumn(fromColumn, toColumn, ticketId);
-    } else if (itemType === Types.COLUMN) {
-      const {
-        localIndex: fromLocalIndex,
-        columnId: fromColumnId,
-        fromBoard
-      } = monitor.getItem();
+    }
+  },
+  hover(props, monitor, component) {
+    const itemType = monitor.getItemType();
+    const item = monitor.getItem();
+    if (itemType === COLUMN) {
+      const { columnId: fromColumnId } = item;
+
       const {
         actions: { dispatchReorderColumn },
-        localIndex: toLocalIndex,
         boardId,
         column: { id: toColumnId }
       } = props;
-
-      const dragIndex = fromLocalIndex;
-      const hoverIndex = toLocalIndex;
-
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-
-      const hoverMiddleX =
-        (hoverBoundingRect.left - hoverBoundingRect.right) / 2;
-
-      const clientOffset = monitor.getClientOffset();
-
-      const hoverClientX = clientOffset.x - hoverBoundingRect.right;
-
-      if (dragIndex >= hoverIndex && hoverClientX > hoverMiddleX) {
-        return;
-      }
-
-      // Dragging upwards
-      if (dragIndex <= hoverIndex && hoverClientX < hoverMiddleX) {
-        return;
-      }
 
       dispatchReorderColumn(boardId, fromColumnId, toColumnId);
     }
@@ -101,15 +81,10 @@ const ColumnTarget = {
 
 function collectTarget(connect, monitor) {
   return {
-    // Call this function inside render()
-    // to let React DnD handle the drag events:
     connectDropTarget: connect.dropTarget(),
-    // You can ask the monitor about the current drag state:
     itemType: monitor.getItemType(),
     canDrop: monitor.canDrop(),
-    isOver: monitor.isOver({ shallow: true }),
-    sourceOffSet: monitor.getSourceClientOffset(),
-    pointerCoordinates: monitor.getClientOffset()
+    isOver: monitor.isOver()
   };
 }
 
@@ -117,13 +92,29 @@ class ColumnItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowActions: false
+      isShowActions: false,
+      isColumnEditable: false
     };
 
     this.handleHeaderActionsVisibility = this.handleHeaderActionsVisibility.bind(
       this
     );
+    this.handleRemoveColumn = this.handleRemoveColumn.bind(this);
   }
+
+  static propTypes = {
+    actions: PropTypes.objectOf(PropTypes.func).isRequired,
+    boardId: PropTypes.number.isRequired,
+    column: PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string
+    }).isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    isOver: PropTypes.bool,
+    canDrop: PropTypes.bool.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired
+  };
 
   componentDidMount() {
     this.headerContainer.addEventListener(
@@ -139,13 +130,42 @@ class ColumnItem extends React.Component {
     );
   }
 
-  handleHeaderActionsVisibility(e) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.refs.columnTitleField !== undefined) {
+      const columnTitleField = this.refs.columnTitleField.getRenderedComponent();
+      const fieldLen = columnTitleField.value.length * 2;
+      columnTitleField.focus();
+      columnTitleField.setSelectionRange(fieldLen, fieldLen);
+    }
+  }
+
+  handleEditColumnTitleVisibility() {
     this.setState(prevState => {
       return {
         ...prevState,
-        isShowActions: !prevState.isShowActions
+        isColumnEditable: !prevState.isColumnEditable
       };
     });
+  }
+
+  saveColumnTitle(values) {
+    const {
+      actions: { dispatchUpdateColumnTitle },
+      column: { id }
+    } = this.props;
+    const { columnTitleField } = values;
+    dispatchUpdateColumnTitle(id, columnTitleField);
+  }
+
+  handleHeaderActionsVisibility(e) {
+    if (this.state.isColumnEditable === false) {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          isShowActions: !prevState.isShowActions
+        };
+      });
+    }
 
     if (this.state.isShowActions === true) {
       this.headerContainer.addEventListener(
@@ -160,75 +180,123 @@ class ColumnItem extends React.Component {
     }
   }
 
+  renderColumnHeader(isColumnEditable, columnId, columnTitle, handleSubmit) {
+    if (isColumnEditable) {
+      return (
+        <Field
+          name="columnTitleField"
+          autoComplete="off"
+          className="formTextField inputBlock columnTitleFormInput"
+          component="input"
+          onKeyUp={event => {
+            let keyCode = event.keyCode;
+            if (keyCode === 13) {
+              handleSubmit(this.saveColumnTitle.bind(this))();
+              this.handleEditColumnTitleVisibility();
+            }
+          }}
+          ref="columnTitleField"
+          withRef
+          type="text"
+        />
+      );
+    }
+
+    return <h2 className="column_title">{columnTitle}</h2>;
+  }
+
+  handleRemoveColumn(dispatchRemoveColumn, boardId, columnId, ticketsLen) {
+    const hasTickets = ticketsLen > 0;
+
+    if (!hasTickets) {
+      dispatchRemoveColumn(boardId, columnId);
+      return;
+    }
+
+    const shouldDeleteAnyway = window.confirm(
+      "Column contains tickets, if removed the tickets will be deleted. Do you want to remove the column anyway?"
+    );
+
+    if (!shouldDeleteAnyway) {
+      return;
+    }
+
+    dispatchRemoveColumn(boardId, columnId);
+  }
+
   render() {
     const {
       boardId,
       column: { title: columnTitle, id: columnId, tickets },
-      actions: { dispatchRemoveColumn: handleRemoveColumn },
+      actions: { dispatchRemoveColumn },
+      handleSubmit,
       connectDragSource,
       connectDropTarget,
       isOver,
       canDrop,
-      itemType,
-      pointerCoordinates,
-      sourceOffSet
+      itemType
     } = this.props;
-    const { isShowActions } = this.state;
+
+    const ticketsLen = tickets.length;
+
+    const { isColumnEditable, isShowActions } = this.state;
 
     return connectDragSource(
       connectDropTarget(
-        <div
-          className={classnames(
-            "column",
-            {
-              "column--ticketIsOver":
-                isOver && canDrop && itemType === Types.TICKET
-            }
-            // {
-            //   "column--anotherColumnIsOverLeft":
-            //     isOver &&
-            //     canDrop &&
-            //     itemType === Types.COLUMN &&
-            //     (sourceOffSet.x === 0 ? 100 : 0) < pointerCoordinates.x
-            // },
-            // {
-            //   "column--anotherColumnIsOverRight":
-            //     isOver &&
-            //     canDrop &&
-            //     itemType === Types.COLUMN &&
-            //     sourceOffSet.x > pointerCoordinates.x
-            // }
-          )}>
+        <div>
           <div
-            ref={el => (this.headerContainer = el)}
-            className="column_headerContainer">
+            className={classnames("column", {
+              "column--ticketIsOver": isOver && canDrop && itemType === TICKET
+            })}>
             <div
-              className={classnames("column_header", {
-                "column_header--hover": isShowActions
-              })}>
-              <h2 className="column_title">{columnTitle}</h2>
+              ref={el => (this.headerContainer = el)}
+              className="column_headerContainer">
+              <div
+                className={classnames("column_header", {
+                  "column_header--hover": isShowActions
+                })}>
+                {this.renderColumnHeader(
+                  isColumnEditable,
+                  columnId,
+                  columnTitle,
+                  handleSubmit
+                )}
+              </div>
+              <div className="column_actions">
+                <div className="action_shadow" />
+                <i
+                  onClick={() => this.handleEditColumnTitleVisibility()}
+                  className="material-icons action action--blue">
+                  mode_edit
+                </i>
+                <i
+                  onClick={() => {
+                    this.handleRemoveColumn(
+                      dispatchRemoveColumn,
+                      boardId,
+                      columnId,
+                      ticketsLen
+                    );
+                  }}
+                  className="material-icons action action--red">
+                  remove_circle_outline
+                </i>
+              </div>
             </div>
-            <div className="column_actions">
-              <i
-                onClick={() => handleRemoveColumn(boardId, columnId)}
-                className="material-icons actions_delete">
-                remove_circle_outline
-              </i>
-            </div>
+            <TicketContainer
+              {...{
+                columnId,
+                ticketIds: tickets
+              }}
+            />
           </div>
-          <TicketContainer
-            {...{
-              columnId,
-              ticketIds: tickets
-            }}
-          />
         </div>
       )
     );
   }
 }
-
 export default flow(
-  DragSource(Types.COLUMN, columnSource, collectSource),
-  DropTarget([Types.COLUMN, Types.TICKET], ColumnTarget, collectTarget)
+  DragSource(COLUMN, ColumnSource, collectSource),
+  DropTarget([COLUMN, TICKET], ColumnTarget, collectTarget),
+  reduxForm()
 )(ColumnItem);

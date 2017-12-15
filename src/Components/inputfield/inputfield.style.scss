@@ -1,0 +1,27 @@
+.field--warning {
+  border-bottom: 2px solid red;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: red;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  right: -150px;
+}
+
+.tooltip--show {
+  visibility: visible !important;
+}

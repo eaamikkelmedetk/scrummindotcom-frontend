@@ -1,18 +1,11 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import style from "../ticket.style.css";
+import "./ticketform.style.css";
 import ButtonItem from "../../Button/ButtonItem";
+import PropTypes from "prop-types";
 
 const TicketForm = props => {
-  const {
-    onAdd: handleAdd,
-    onCancel: handleCancel,
-    handleSubmit,
-    pristine,
-    reset,
-    submitting,
-    isTicketFormVisible
-  } = props;
+  const { handleSubmit, reset, isTicketFormVisible } = props;
 
   const handleTicketFormVisibility = () => {
     const { columnId, actions: { dispatchSetTicketFormVisibility } } = props;
@@ -47,34 +40,48 @@ const TicketForm = props => {
           <Field
             name="title"
             autoComplete="off"
-            className="formTextField inputBlock"
+            className="formTextField inputBlock ticketFormInput"
             component="input"
             type="text"
             placeholder="Title"
           />
           <Field
             name="description"
-            className="formTextArea inputBlock"
+            className="formTextArea inputBlock ticketFormInput"
             component="textarea"
             type="text"
             placeholder="Description..."
           />
           <div className="ticketForm_submitAndCancelButtons">
-            <ButtonItem onClick={handleTicketFormVisibility} color="orange_transparent">
+            <ButtonItem
+              onClick={handleTicketFormVisibility}
+              color="orange_transparent">
               Cancel
             </ButtonItem>
-            <ButtonItem onClick={handleSubmit(handleOnAdd)} color="orange_transparent">
+            <ButtonItem
+              onClick={handleSubmit(handleOnAdd)}
+              color="orange_transparent">
               Add ticket
             </ButtonItem>
           </div>
         </div>
       ) : (
-        <ButtonItem style={{ width: "90%", marginBottom: "0.5rem" }} onClick={handleTicketFormVisibility} color="blue">
+        <ButtonItem
+          style={{ width: "90%", marginBottom: "0.5rem" }}
+          onClick={handleTicketFormVisibility}
+          color="blue">
           Add ticket
         </ButtonItem>
       )}
     </div>
   );
+};
+
+TicketForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  columnId: PropTypes.number.isRequired,
+  reset: PropTypes.func.isRequired,
+  actions: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 export default reduxForm({ form: "TicketForm" })(TicketForm);

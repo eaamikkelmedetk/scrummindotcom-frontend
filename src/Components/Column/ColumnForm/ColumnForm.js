@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import style from "../column.style.css";
 import { Field, reduxForm } from "redux-form";
 import ButtonItem from "../../Button/ButtonItem";
+import {
+  minLength3,
+  onlyLettersAndDigits,
+  required
+} from "../../../Validators/validator";
+import "./columnForm.style.css";
+import inputField from "../../inputfield/inputfield";
 
 class ColumnForm extends Component {
   constructor(props) {
@@ -19,7 +25,7 @@ class ColumnForm extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div className={"addNewColumn"}>
+      <div className="addNewColumn">
         <div className="addNewColumn_headerContainer">
           <h2 className="addNewColumn_title">Add column...</h2>
         </div>
@@ -28,10 +34,12 @@ class ColumnForm extends Component {
             <Field
               name="title"
               autoComplete="off"
-              className="formTextField inputBlock"
-              component="input"
+              className="columnFormInput"
+              component={inputField}
               type="text"
               placeholder="Column name..."
+              validationErrorClass="columnForm--warning"
+              validate={[minLength3, required, onlyLettersAndDigits]}
             />
             <div className="addNewColumn_submitButton">
               <ButtonItem

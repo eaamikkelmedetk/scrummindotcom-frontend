@@ -1,23 +1,42 @@
 import {
+  BOARD_GET_REQUEST,
   TICKET_COLUMN_ADD,
   TICKET_COLUMN_REMOVE,
   COLUMN_ADD,
+  COLUMN_UPDATETITLE,
   COLUMN_REMOVE,
   TICKET_SETFORMVISIBILITY,
   COLUMN_REORDER,
   COLUMN_MOVETICKETFROMTO,
   TICKET_REORDER
 } from "./Actions";
-import uniqid from "uniqid";
+
+export function dispatchGetBoard(boardId) {
+  return {
+    type: BOARD_GET_REQUEST,
+    payload: {
+      boardId
+    }
+  };
+}
 
 export function dispatchAddTicketToColumn(columnid, title, description) {
   return {
     type: TICKET_COLUMN_ADD,
     payload: {
-      id: uniqid(),
       columnid,
       title,
       description
+    }
+  };
+}
+
+export function dispatchUpdateColumnTitle(columnid, columnTitle) {
+  return {
+    type: COLUMN_UPDATETITLE,
+    payload: {
+      columnid,
+      columnTitle
     }
   };
 }
@@ -36,7 +55,6 @@ export function dispatchAddColumn(boardId, title) {
   return {
     type: COLUMN_ADD,
     payload: {
-      id: uniqid(),
       boardId: boardId,
       title: title
     }

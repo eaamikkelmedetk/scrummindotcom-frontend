@@ -1,0 +1,57 @@
+.addNewColumn {
+  align-items: center;
+  background-color: #e4e4e4;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-height: 88px;
+  text-align: center;
+  width: 19rem;
+}
+
+.addNewColumn_headerContainer {
+  border-bottom: 1px solid #111;
+  font-weight: bold;
+  min-height: 75px;
+  padding-top: 13px;
+  text-align: center;
+  width: 100%;
+}
+
+.addNewColumn_title {
+  color: #111;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.addNewColumn_columnForm {
+  margin-top: auto;
+  padding-bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.addNewColumn_submitButton {
+  text-align: right;
+  width: 100%;
+}
+
+.columnForm {
+  align-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.columnFormInput {
+  background: transparent;
+  border-bottom: 1px solid #00796b;
+
+  margin: 10px auto;
+}
+
+.columnForm--warning {
+  border-bottom: 1px solid red;
+}

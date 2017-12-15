@@ -1,28 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import TicketItem from "../TicketItem/TicketItem";
 
-class TicketList extends React.Component {
-  getColumns() {
-    const { ticketIds, ticketEntity, actions, columnId } = this.props;
-
+class TicketList extends Component {
+  getColumns(ticketIds, ticketEntity, columnId, actions) {
     let ticketsToRender = ticketIds;
 
     let printTickets = ticketsToRender.map((id, localIndex) => {
       let ticket = ticketEntity[id];
-      return ticket !== undefined ? (
+      return (
         <TicketItem
           key={ticket.id}
           {...{ columnId, ticket, localIndex, actions }}
         />
-      ) : (
-        <div>Hej</div>
       );
     });
 
     return printTickets;
   }
+
   render() {
-    return <div className="column_tickets">{this.getColumns()}</div>;
+    const { ticketIds, ticketEntity, actions, columnId } = this.props;
+    return (
+      <div className="column_tickets">
+        {this.getColumns(ticketIds, ticketEntity, columnId, actions)}
+      </div>
+    );
   }
 }
 

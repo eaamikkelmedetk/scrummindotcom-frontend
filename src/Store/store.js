@@ -12,6 +12,7 @@ export function configureStore(initialState = {}) {
     applyMiddleware(sagaMiddleware)
   );
   sagaMiddleware.run(rootSaga);
+
   return store;
 }
 

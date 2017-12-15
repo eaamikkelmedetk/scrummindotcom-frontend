@@ -1,105 +1,78 @@
 import {
-  TICKET_COLUMN_ADD,
-  TICKET_COLUMN_REMOVE,
-  COLUMN_ADD,
-  COLUMN_REMOVE,
+  TICKET_COLUMN_ADD_SUCCESS,
+  TICKET_COLUMN_REMOVE_SUCCESS,
+  COLUMN_ADD_SUCCESS,
+  COLUMN_UPDATETITLE_SUCCESS,
+  COLUMN_REMOVE_SUCCESS,
   TICKET_SETFORMVISIBILITY,
-  COLUMN_REORDER,
-  COLUMN_MOVETICKETFROMTO,
-  TICKET_REORDER
+  COLUMN_REORDER_SUCCESS,
+  COLUMN_MOVETICKETFROMTO_SUCCESS,
+  TICKET_REORDER_SUCCESS,
+  BOARD_GET_REQUEST_SUCCESS
 } from "./Actions";
-import { without, omit, reduce } from "lodash";
+import { without, omit, reduce, forOwn } from "lodash";
 
 const initialStateEntities = {
-  board: {
-    "1": {
-      id: 1,
-      title: "portfolio",
-      columns: [1, 2, 3, 4, 5]
-    }
-  },
-  column: {
-    "1": {
-      id: 1,
-      title: "Backlog",
-      tickets: [6, 1]
-    },
-    "2": {
-      id: 2,
-      title: "Analysis",
-      tickets: [2]
-    },
-    "3": {
-      id: 3,
-      title: "In-development",
-      tickets: [3]
-    },
-    "4": {
-      id: 4,
-      title: "Client-review",
-      tickets: [4]
-    },
-    "5": {
-      id: 5,
-      title: "Done",
-      tickets: [5]
-    }
-  },
-  ticket: {
-    "1": {
-      id: 1,
-      title: "Køb mælk",
-      description: "Vi mangler mælk til havrefrasen imorgen."
-    },
-    "2": {
-      id: 2,
-      title: "Vask tøjet",
-      description: "Der skal vaskes så vi har rent tøj til imorgen"
-    },
-    "3": {
-      id: 3,
-      title: "Hent unger",
-      description: "Ungerne skal hentes i institutionen"
-    },
-    "4": {
-      id: 4,
-      title: "Lav madpakke",
-      description: "Der skal laves madpakker til ungerne"
-    },
-    "5": {
-      id: 5,
-      title: "Create",
-      description: "Create things"
-    },
-    "6": {
-      id: 6,
-      title: "Bum",
-      description: "Create things"
-    }
-  }
+  board: {},
+  column: {},
+  ticket: {}
 };
 
 export const BoardReducer = (state = initialStateEntities, action) => {
   switch (action.type) {
-    case COLUMN_ADD: {
+    case BOARD_GET_REQUEST_SUCCESS: {
+      const { board, ticket, column } = action.payload;
+      return {
+        ...state,
+        board,
+        ticket,
+        column
+      };
+    }
+    case "BOARD_GET_REQUEST_FETCHING": {
+      const { board, ticket, column } = action.payload;
+      return {
+        ...state,
+        board,
+        ticket,
+        column
+      };
+    }
+    case "BOARD_GET_REQUEST_FAIL": {
+      const { board } = action.payload;
+      return {
+        ...state,
+        board: {
+          ...state.board,
+          meta: {
+            ...state.board.meta,
+            error: board.meta.error
+          }
+        }
+      };
+    }
+    case COLUMN_ADD_SUCCESS: {
       return addColumn(state, action);
     }
-    case TICKET_COLUMN_ADD: {
-      return addTicketToColumn(state, action);
-    }
-    case COLUMN_REMOVE: {
+    case COLUMN_REMOVE_SUCCESS: {
       return removeColumn(state, action);
     }
-    case TICKET_COLUMN_REMOVE: {
+    case COLUMN_UPDATETITLE_SUCCESS: {
+      return updateColumnTitle(state, action);
+    }
+    case TICKET_COLUMN_ADD_SUCCESS: {
+      return addTicketToColumn(state, action);
+    }
+    case TICKET_COLUMN_REMOVE_SUCCESS: {
       return removeTicketFromColumn(state, action);
     }
-    case COLUMN_REORDER: {
+    case COLUMN_REORDER_SUCCESS: {
       return reorderColumn(state, action);
     }
-    case TICKET_REORDER: {
+    case TICKET_REORDER_SUCCESS: {
       return reorderTicket(state, action);
     }
-    case COLUMN_MOVETICKETFROMTO: {
+    case COLUMN_MOVETICKETFROMTO_SUCCESS: {
       return moveTicketFromTo(state, action);
     }
     default: {
@@ -154,6 +127,20 @@ function addTicketToColumn(state, action) {
   };
 }
 
+function updateColumnTitle(state, action) {
+  const { columnid, columnTitle } = action.payload;
+  return {
+    ...state,
+    column: {
+      ...state.column,
+      [columnid]: {
+        ...state.column[columnid],
+        title: columnTitle
+      }
+    }
+  };
+}
+
 function removeColumn(state, action) {
   const { boardId, columnId } = action.payload;
   return {
@@ -195,8 +182,6 @@ function reorderColumn(state, action) {
   const { boardId, columnIdMoveFrom, columnIdMoveTo } = action.payload;
   const fromIndex = state.board[boardId].columns.indexOf(columnIdMoveFrom);
   const toIndex = state.board[boardId].columns.indexOf(columnIdMoveTo);
-  console.log(boardId);
-  console.log(state.board[boardId].columns);
   return {
     ...state,
     board: {
@@ -296,12 +281,25 @@ const InitialColumnUIState = {
 
 export const ticketUIReducer = (state = InitialColumnUIState, action) => {
   switch (action.type) {
-    case COLUMN_ADD:
+    case BOARD_GET_REQUEST_SUCCESS:
+      const { column } = action.payload;
+      let rebuildColumnObjectToUI = {};
+      forOwn(column, (value, key) => {
+        rebuildColumnObjectToUI[key] = {
+          id: value.id,
+          isTicketFormVisibile: false
+        };
+      });
+      return {
+        ...state,
+        column: rebuildColumnObjectToUI
+      };
+    case COLUMN_ADD_SUCCESS:
       return {
         ...state,
         column: addColumnUI(state.column, action)
       };
-    case COLUMN_REMOVE:
+    case COLUMN_REMOVE_SUCCESS:
       return {
         ...state,
         column: removeColumnUI(state.column, action)
