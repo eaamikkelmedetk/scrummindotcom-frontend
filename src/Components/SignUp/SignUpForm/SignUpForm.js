@@ -34,7 +34,7 @@ class SignUpForm extends Component {
 
   handleSignUp(values) {
     const { history } = this.props;
-    axios
+    return axios
       .post(Api.newBoard, {
         Title: values.boardname,
         Email: values.email
@@ -49,7 +49,7 @@ class SignUpForm extends Component {
 
   render() {
     const { isSignUpClicked } = this.state;
-    const { handleSubmit, pristine, invalid } = this.props;
+    const { handleSubmit, pristine, invalid, submitting } = this.props;
     return (
       <div className="signUp_form">
         {isSignUpClicked ? (
@@ -88,7 +88,7 @@ class SignUpForm extends Component {
                 marginTop: "10px"
               }}
               onClick={handleSubmit(this.handleSignUp)}
-              disabled={pristine || invalid}
+              disabled={pristine || invalid || submitting}
               color="black">
               CREATE NOW
             </ButtonItem>
