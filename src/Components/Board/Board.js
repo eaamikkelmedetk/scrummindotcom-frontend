@@ -19,6 +19,9 @@ class Board extends Component {
       ).isRequired
     })
   };
+  constructor(props) {
+    super(props);
+  }
 
   componentWillMount() {
     const { actions: { dispatchGetBoard } } = this.props;
@@ -38,8 +41,7 @@ class Board extends Component {
         {!isFetching &&
           error === undefined && (
             <div className="board_title">
-              <i className="title_icon material-icons">dashboard</i>
-              <h1 className="title_heading">{title} >></h1>
+              <h1 className="title_heading">{title}</h1>
             </div>
           )}
         <div className="board">

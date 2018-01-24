@@ -60,7 +60,6 @@ class ColumnListContainer extends Component {
     return (
       <div className="columns">
         {this.getColumns(actions, boardId, columnIds, columnEntity)}
-        <ColumnForm {...{ dispatchAddColumn, boardId }} />
       </div>
     );
   }
