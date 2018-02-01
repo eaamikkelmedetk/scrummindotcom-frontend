@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ColumnItem from "../ColumnItem/ColumnItem";
 import ColumnForm from "../ColumnForm/ColumnForm";
+import AddColumnButton from "../../AddColumnButton/AddColumnButton";
 import "./columnlistcontainer.style.css";
 
 class ColumnListContainer extends Component {
@@ -60,6 +61,8 @@ class ColumnListContainer extends Component {
     return (
       <div className="columns">
         {this.getColumns(actions, boardId, columnIds, columnEntity)}
+        <ColumnForm {...{ dispatchAddColumn, boardId }} />
+        <AddColumnButton {...{ dispatchAddColumn, boardId }} />
       </div>
     );
   }

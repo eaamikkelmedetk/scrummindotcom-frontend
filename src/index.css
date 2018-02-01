@@ -4,6 +4,8 @@ body {
   padding: 0;
   color: #f9f9f9;
   background-color: rgba(245, 245, 246, 1);
+  font-size: 18px;
+  line-height: 1.44;
 }
 
 .material-icons {
@@ -64,4 +66,12 @@ textarea {
 
 .clear {
   clear: both;
+}
+
+.round {
+  border-radius: 100%;
+}
+
+.clickable {
+  cursor: pointer;
 }

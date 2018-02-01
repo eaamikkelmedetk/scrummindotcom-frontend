@@ -19,9 +19,6 @@ class Board extends Component {
       ).isRequired
     })
   };
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     const { actions: { dispatchGetBoard } } = this.props;
