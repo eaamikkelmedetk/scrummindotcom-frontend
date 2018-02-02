@@ -140,12 +140,8 @@ class ColumnItem extends React.Component {
   }
 
   handleEditColumnTitleVisibility() {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        isColumnEditable: !prevState.isColumnEditable
-      };
-    });
+    const { actions: { dispatchActivateNameEditing }, column } = this.props;
+    dispatchActivateNameEditing(column.id);
   }
 
   saveColumnTitle(values) {
@@ -180,8 +176,8 @@ class ColumnItem extends React.Component {
     }
   }
 
-  renderColumnHeader(isColumnEditable, columnId, columnTitle, handleSubmit) {
-    if (isColumnEditable) {
+  renderColumnHeader(isNameBeingEdited, columnId, columnTitle, handleSubmit) {
+    if (isNameBeingEdited) {
       return (
         <Field
           name="columnTitleField"
@@ -234,7 +230,8 @@ class ColumnItem extends React.Component {
       connectDropTarget,
       isOver,
       canDrop,
-      itemType
+      itemType,
+      isNameBeingEdited
     } = this.props;
 
     const ticketsLen = tickets.length;
@@ -256,7 +253,7 @@ class ColumnItem extends React.Component {
                   "column_header--hover": isShowActions
                 })}>
                 {this.renderColumnHeader(
-                  isColumnEditable,
+                  isNameBeingEdited,
                   columnId,
                   columnTitle,
                   handleSubmit

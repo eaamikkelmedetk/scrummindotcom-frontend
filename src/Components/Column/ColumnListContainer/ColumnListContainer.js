@@ -30,14 +30,16 @@ class ColumnListContainer extends Component {
     )
   };
 
-  getColumns(actions, boardId, columnIds, columnEntity) {
+  getColumns(actions, boardId, columnIds, columnEntity, columnEntityUI) {
     let columnsToRender = columnIds;
 
     let printColumns = columnsToRender.map((id, localIndex) => {
       let column = columnEntity[id];
+      let columnUI = columnEntityUI[id];
       return (
         <ColumnItem
           key={column.id}
+          isNameBeingEdited={columnUI.isNameBeingEdited}
           form={column.id.toString()}
           initialValues={{
             columnTitleField: column.title
@@ -56,12 +58,18 @@ class ColumnListContainer extends Component {
       actions,
       boardId,
       columnIds,
-      columnEntity
+      columnEntity,
+      columnEntityUI
     } = this.props;
     return (
       <div className="columns">
-        {this.getColumns(actions, boardId, columnIds, columnEntity)}
-        <ColumnForm {...{ dispatchAddColumn, boardId }} />
+        {this.getColumns(
+          actions,
+          boardId,
+          columnIds,
+          columnEntity,
+          columnEntityUI
+        )}
         <AddColumnButton {...{ dispatchAddColumn, boardId }} />
       </div>
     );
@@ -69,8 +77,15 @@ class ColumnListContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { column: columnEntity } = state.entities;
-  return { columnEntity };
+  const {
+    entities: { column: columnEntity },
+    boardUI: { column: columnEntityUI }
+  } = state;
+
+  return {
+    columnEntity,
+    columnEntityUI
+  };
 };
 
 const mapDispatchToProps = dispatch => {

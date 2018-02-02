@@ -17,7 +17,8 @@ import {
   COLUMN_REORDER,
   COLUMN_REORDER_SUCCESS,
   TICKET_REORDER,
-  TICKET_REORDER_SUCCESS
+  TICKET_REORDER_SUCCESS,
+  COLUMN_ACTIVATENAMEDITING
 } from "./Actions";
 import { normalize } from "normalizr";
 import { boardEntity } from "../../Schemas/BoardSchema";

@@ -10,7 +10,6 @@
 
 .boardWrapper {
   position: relative;
-  min-width: 100vw;
 }
 
 .board_title {
@@ -24,8 +23,7 @@
   color: white;
   z-index: -1;
   font-size:1.44rem;
-  left: 0;
-  right: 0;
+  width: 100vw;
 }
 
 .title_heading {

@@ -8,8 +8,7 @@
   margin: 6rem 1rem; }
 
 .boardWrapper {
-  position: relative;
-  min-width: 100vw; }
+  position: relative; }
 
 .board_title {
   display: inline-flex;
@@ -22,8 +21,7 @@
   color: white;
   z-index: -1;
   font-size: 1.44rem;
-  left: 0;
-  right: 0; }
+  width: 100vw; }
 
 .title_heading {
   text-transform: capitalize;

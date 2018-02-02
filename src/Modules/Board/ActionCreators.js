@@ -8,7 +8,8 @@ import {
   TICKET_SETFORMVISIBILITY,
   COLUMN_REORDER,
   COLUMN_MOVETICKETFROMTO,
-  TICKET_REORDER
+  TICKET_REORDER,
+  COLUMN_ACTIVATENAMEDITING
 } from "./Actions";
 
 export function dispatchGetBoard(boardId) {
@@ -117,6 +118,15 @@ export function dispatchReorderTicket(
       columnId,
       ticketIdMoveFrom,
       ticketIdMoveTo
+    }
+  };
+}
+
+export function dispatchActivateNameEditing(columnId) {
+  return {
+    type: COLUMN_ACTIVATENAMEDITING,
+    payload: {
+      columnId
     }
   };
 }

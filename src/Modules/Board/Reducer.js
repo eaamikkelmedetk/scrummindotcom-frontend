@@ -8,7 +8,8 @@ import {
   COLUMN_REORDER_SUCCESS,
   COLUMN_MOVETICKETFROMTO_SUCCESS,
   TICKET_REORDER_SUCCESS,
-  BOARD_GET_REQUEST_SUCCESS
+  BOARD_GET_REQUEST_SUCCESS,
+  COLUMN_ACTIVATENAMEDITING
 } from "./Actions";
 import { without, omit, reduce, forOwn } from "lodash";
 
@@ -254,32 +255,7 @@ function immutablySwapItems(items, firstIndex, secondIndex) {
   return results;
 }
 
-const InitialColumnUIState = {
-  column: {
-    "1": {
-      id: 1,
-      isTicketFormVisibile: false
-    },
-    "2": {
-      id: 2,
-      isTicketFormVisibile: false
-    },
-    "3": {
-      id: 3,
-      isTicketFormVisibile: false
-    },
-    "4": {
-      id: 4,
-      isTicketFormVisibile: false
-    },
-    "5": {
-      id: 5,
-      isTicketFormVisibile: false
-    }
-  }
-};
-
-export const ticketUIReducer = (state = InitialColumnUIState, action) => {
+export const boardUiReducer = (state = {}, action) => {
   switch (action.type) {
     case BOARD_GET_REQUEST_SUCCESS:
       const { column } = action.payload;
@@ -287,7 +263,8 @@ export const ticketUIReducer = (state = InitialColumnUIState, action) => {
       forOwn(column, (value, key) => {
         rebuildColumnObjectToUI[key] = {
           id: value.id,
-          isTicketFormVisibile: false
+          isTicketFormVisibile: false,
+          isNameBeingEdited: false
         };
       });
       return {
@@ -306,6 +283,8 @@ export const ticketUIReducer = (state = InitialColumnUIState, action) => {
       };
     case TICKET_SETFORMVISIBILITY:
       return setTicketFormVisibilityUI(state, action);
+    case COLUMN_ACTIVATENAMEDITING:
+      return activateColumnNameEditing(state, action);
     default:
       return state;
   }
@@ -317,7 +296,8 @@ export function addColumnUI(state, action) {
     ...state,
     [columnId]: {
       id: columnId,
-      isTicketFormVisible: false
+      isTicketFormVisible: false,
+      isNameBeingEdited: true
     }
   };
 }
@@ -337,6 +317,26 @@ export function setTicketFormVisibilityUI(state, action) {
           value.isTicketFormVisibile = !value.isTicketFormVisibile;
         } else {
           value.isTicketFormVisibile = false;
+        }
+
+        result[key] = value;
+        return result;
+      },
+      {}
+    )
+  };
+}
+
+export function activateColumnNameEditing(state, action) {
+  const { columnId } = action.payload;
+  return {
+    column: reduce(
+      state.column,
+      (result, value, key) => {
+        if (key === columnId.toString()) {
+          value.isNameBeingEdited = !value.isNameBeingEdited;
+        } else {
+          value.isNameBeingEdited = false;
         }
 
         result[key] = value;
